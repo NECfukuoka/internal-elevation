@@ -39,8 +39,21 @@ http://localhost:8082/getelevation.php?lon=139.11849975585938&lat=35.38121266833
 
 APIへのリクエスト(URL)は以下となります：
 ```
-http://[server]/getelevation.php?lon=[経度]&lat=[緯度]
+http://[server]/getelevation.php?lon=[経度]&lat=[緯度]&callback=[JSONPで返すときのコールバック関数]&outtype=[アウトプットの形式]
+
 ```
+
+インプットパラメータ|意味|備考|パラメータの指定について
+---|----|--------|---------|--------------------
+lon|経度|度の10進法で指定します|必ず指定してください
+lat|緯度|度の10進法で指定します|必ず指定してください
+callback|JSONPで返すときのコールバック関数|JavaScriptの関数名に使用出来る文字列を指定します|outtypeを指定する場合は指定しない
+outtype|アウトプットの形式|「JSON」という固定文字列を指定します|callbackを指定する場合は指定しない
+
+**「callback」を指定するとJSONP形式で、「outtype」を指定するとJSON形式で結果が返ります．**
+
+**「callback」と「outtype」はどちらかを指定してください．（両方の指定はしないでください）**
+
 **位置情報の測地系はJGD2011で指定します**
 
 
@@ -49,14 +62,29 @@ http://[server]/getelevation.php?lon=[経度]&lat=[緯度]
 {"elevation":[標高値(メートル)],"hsrc":"[標高のデータ参照元]"}
 ```
 
-例：リクエスト
+**例1**
+
+リクエスト
 
 ```
-http://localhost:8082/getelevation.php?lon=139.11849975585938&lat=35.38121266833199
+http://localhost:8082/getelevation.php?lon=139.11849975585938&lat=35.38121266833199&outtype=JSON
 ```
 
-例：レスポンス(JSON)
+レスポンス(JSON)
 
 ```
 {"elevation":550,"hsrc":"5m\uff08\u30ec\u30fc\u30b6\uff09"}
+```
+**例2**
+
+リクエスト
+
+```
+http://localhost:8082/getelevation.php?lon=139.11849975585938&lat=35.38121266833199&callback=test
+```
+
+レスポンス(JSON)
+
+```
+test({"elevation":550,"hsrc":"5m\uff08\u30ec\u30fc\u30b6\uff09"})
 ```

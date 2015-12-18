@@ -25,13 +25,15 @@ function elevationAPI() {
 			$status = "ERROR";
 		}
 	}
-	
-	$callback = isset($_GET["callback"])?$_GET["callback"]:"";
-	if (!empty($callback)) {
-		if (preg_match("/^([a-z]|[A-Z]|[_$])([a-z]|[A-Z]|[_$]|[0-9]){0,}$/",$callback) === 0) {
-			$status = "ERROR";
-			sendResult($result,"");
-			return;
+	$outtype = isset($_GET["outtype"])?$_GET["outtype"]:"";
+	if ($outtype != "JSON") {
+		$callback = isset($_GET["callback"])?$_GET["callback"]:"";
+		if (!empty($callback)) {
+			if (preg_match("/^([a-z]|[A-Z]|[_$])([a-z]|[A-Z]|[_$]|[0-9]){0,}$/",$callback) === 0) {
+				$status = "ERROR";
+				sendResult($result,"");
+				return;
+			}
 		}
 	}
 	
