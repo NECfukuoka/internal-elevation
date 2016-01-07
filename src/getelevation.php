@@ -9,7 +9,10 @@ function elevationAPI() {
 		ini_set("zlib.output_compression","On");
 	}
 	
-	$result = array();
+	$result = array(
+		"elevation" => "-----",
+		"hsrc" => "-----"
+	);
 	$status = "OK";
 	if (isset($_GET['lon'])){
 		if (is_numeric($_GET['lon'])) {
@@ -70,9 +73,6 @@ function elevationAPI() {
 		$result = $data;
 	} else {
 		$status = "ERROR";
-	}
-	if ($status != "OK") {
-		$result = NULL;
 	}
 	sendResult($result,$callback);
 }
